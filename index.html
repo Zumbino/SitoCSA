@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lega CSA - Il Fantacalcio più Epico del Mondo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #1a5d1a;
+            --secondary-green: #2d8f2d;
+            --accent-orange: #ff6b35;
+            --gold: #ffd700;
+            --dark-bg: rgba(0,0,0,0.9);
+            --glass-bg: rgba(255,255,255,0.1);
+            --gradient-main: linear-gradient(135deg, #1a5d1a 0%, #2d8f2d 50%, #228B22 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            --shadow-glow: 0 8px 32px rgba(255,107,53,0.3);
+            --shadow-deep: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--gradient-main);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Particles Background */
+        .particles-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .header {
+            background: var(--dark-bg);
+            backdrop-filter: blur(20px);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-deep);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--accent-orange);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--accent-orange), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,107,53,0.5);
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+
+        .nav-menu a:hover {
+            background: linear-gradient(45deg, var(--accent-orange), #ff8c42);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255,107,53,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(45,143,45,0.4) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, white, var(--gold), var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+            filter: drop-shadow(0 0 20px rgba(255,107,53,0.5));
+            animation: heroGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            from { filter: drop-shadow(0 0 20px rgba(255,107,53,0.5)) drop-shadow(0 0 40px rgba(255,215,0,0.3)); }
+            to { filter: drop-shadow(0 0 30px rgba(255,107,53,0.8)) drop-shadow(0 0 60px rgba(255,215,0,0.5)); }
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            max-width: 900px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, #ff8c42 50%, var(--gold) 100%);
+            color: white;
+            padding: 1.2rem 3rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255,107,53,0.6);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .section h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, var(--accent-orange), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-orange), var(--gold));
+            border-radius: 2px;
+        }
+
+        .fantallenatori-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .fantallenatore-card {
+            background: var(--gradient-card);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255,107,53,0.3);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-deep);
+        }
+
+        .fantallenatore-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,107,53,0.1) 0%, transparent 50%, rgba(255,215,0,0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .fantallenatore-card:hover::before {
+            opacity: 1;
+        }
+
+        .fantallenatore-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: var(--shadow-glow), var(--shadow-deep);
+            border-color: var(--accent-orange);
+        }
+
+        .fantallenatore-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fantallenatore-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid var(--accent-orange);
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fantallenatore-avatar::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            animation: avatarShine 3s linear infinite;
+        }
+
+        @keyframes avatarShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .fantallenatore-info h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--accent-orange);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .status.difficolta { 
+            background: linear-gradient(135deg, #e74c3c, #c0392b); 
+            color: white;
+        }
+        .status.esperto { 
+            background: linear-gradient(135deg, #3498db, #2980b9); 
+            color: white;
+        }
+        .status.alieno { 
+            background: linear-gradient(135deg, #9b59b6, #8e44ad); 
+            color: white;
+        }
+        .status.birrino { 
+            background: linear-gradient(135deg, #f39c12, #e67e22); 
+            color: white;
+        }
+
+        .fantallenatore-card p {
+            font-size: 1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .albo-oro {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,107,53,0.1) 100%);
+            backdrop-filter: blur(15px);
+            border: 2px solid var(--gold);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow-deep);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .albo-oro::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--gold), var(--accent-orange), var(--gold));
+            z-index: -1;
+            border-radius: 25px;
+        }
+
+        .albo-oro h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--gold);
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 2rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+
+        .anno-vittoria {
+            background: var(--gradient-card);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 15px;
+            border-left: 5px solid var(--gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .anno-vittoria:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+        }
+
+        .manager-summary {
+            background: var(--gradient-card);
+            backdrop-filter: blur(15px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-orange);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manager-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .manager-summary:hover::before {
+            left: 100%;
+        }
+
+        .manager-summary:hover {
+            background: rgba(255,107,53,0.05);
+            transform: translateY(-5px) translateX(5px);
+            box-shadow: var(--shadow-glow);
+            border-left-color: var(--gold);
+        }
+
+        .season-archive {
+            background: var(--gradient-card);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255,107,53,0.3);
+            box-shadow: var(--shadow-deep);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .season-archive::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, var(--accent-orange), transparent, var(--gold));
+            z-index: -1;
+            border-radius: 25px;
+            opacity: 0.3;
+        }
+
+        .roster-details {
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .roster-button {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1.2rem 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76,175,80,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roster-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: all 0.5s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .roster-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .roster-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76,175,80,0.5);
+        }
+
+        .footer {
+            background: var(--dark-bg);
+            backdrop-filter: blur(20px);
+            text-align: center;
+            padding: 3rem;
+            margin-top: 6rem;
+            border-top: 2px solid var(--accent-orange);
+        }
+
+        .easter-egg {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-orange), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            box-shadow: var(--shadow-glow);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(0deg); }
+            40% { transform: translateY(-10px) rotate(10deg); }
+            60% { transform: translateY(-5px) rotate(-5deg); }
+        }
+
+        .easter-egg:hover {
+            transform: scale(1.2) rotate(360deg);
+            box-shadow: 0 15px 40px rgba(255,107,53,0.6);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: var(--gradient-card);
+            backdrop-filter: blur(20px);
+            margin: 5% auto;
+            padding: 3rem;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 25px;
+            border: 2px solid var(--accent-orange);
+            position: relative;
+            box-shadow: var(--shadow-deep);
+            animation: modalSlideIn 0.5s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.8) translateY(-50px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .close {
+            color: var(--accent-orange);
+            float: right;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        /* Glassmorphism Info Boxes */
+        .info-box {
+            background: var(--gradient-card);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-deep);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 3rem; }
+            .nav-menu { 
+                display: none; 
+            }
+            .fantallenatori-grid { 
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .section {
+                padding: 4rem 1rem;
+            }
+            .fantallenatore-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo { font-size: 2rem; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .section h2 { font-size: 2.5rem; }
+            .modal-content { 
+                margin: 10% auto;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles-bg"></div>
+
+    <header class="header">
+    <nav class="nav-container">
+        <div class="logo">
+            <h4>Lega CSA</h4> 
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#fantallenatori">Fantallenatori</a></li>
+            <li><a href="#albo-oro">Albo d'Oro</a></li>
+            <li><a href="#archivio">Archivio Rose</a></li>
+            <li><a href="#tunzi">Storia dei Tunzi</a></li>
+            <li><a href="#regolamento">Regolamento</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <img src="/Users/simone/Downloads/SitoCSA/Logo_FantaCSA.png" alt="Lega CSA" style="width:300px; height:300px;">
+                <h1>LEGA CSA</h1>
+                <p>Dove i sogni di gloria si scontrano con la dura realtà del fantacalcio. Dal 2013 regaliamo speranze e delusioni in egual misura.</p>
+                <a href="#fantallenatori" class="cta-button">Scopri i Protagonisti ⚡</a>
+            </div>
+        </section>
+
+        <section id="chi-siamo" class="section">
+            <h2>La Nostra Leggenda</h2>
+            <div class="info-box">
+                <p style="font-size: 1.2rem; text-align: center; margin-bottom: 2rem; font-weight: 300;">
+                    Nata nel lontano 2013, tra i banchi della gloriosa classe CSA, la nostra lega non era che un passatempo scolastico. Ma come tutte le grandi storie, anche questa ha preso strade imprevedibili: da semplice gioco tra compagni di classe si è trasformata in un’istituzione, capace di accogliere perfino i cosiddetti forestieri.
+                </p>
+                
+                <p style="font-size: 1.2rem; text-align: center; margin-bottom: 2rem; font-weight: 300;">
+                    L’asta, da ordinaria riunione di inizio stagione, si è presto elevata a rito sacro, celebrato due volte l’anno come una liturgia pagana. All’inizio avveniva nella storica dimora di Zumba, poi ha trovato la sua reggia definitiva a Treggiaia, nel palazzo di Ludo. Qui, tra birre, gridolini di disperazione e colpi di scena degni di Shakespeare, si consuma ogni volta il dramma: amicizie in bilico, alleanze segrete, vendette covate da mesi e sogni che svaniscono al prezzo di un’asta rilanciata.
+                </p>
+
+                <p style="font-size: 1.2rem; text-align: center; font-weight: 300;">
+                    Trovare la data per l’evento è esso stesso un’epopea: serve il sangue freddo di un contabile, la pazienza di un diplomatico e gli strumenti arcani di Excel. Solo così, con miracoli degni degli dèi del fantacalcio, si riesce a far sedere tutti intorno allo stesso tavolo.
+                </p>
+
+                <p style="font-size: 1.2rem; text-align: center; font-weight: 300;">
+                    Quello che era nato come una scusa per stare insieme è ormai un teatro epico di passioni calcistiche, destinato a scrivere nuove pagine di gloria, dolore e risate.
+                </p>
+            </div>
+        </section>
+
+        <section id="fantallenatori" class="section">
+            <h2>I Protagonisti del Dramma</h2>
+            <div class="fantallenatori-grid">
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Zumba_Profilo.png" alt="Zumba Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>ZUMBA - Il Dittatore Decaduto</h3>
+                            <span class="status difficolta">In Difficoltà</span>
+                        </div>
+                    </div>
+                    <p>Tre fantacalci vinti, primo nell'albo d'oro. Un tempo trasformava ogni pippone in bomber grazie a poteri soprannaturali. Ma da tre anni la magia è finita. Il regno vacilla, la pozione si è esaurita.</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Prata_Profilo.png" alt="Prata Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>PRATA - L'Infame che Studia</h3>
+                            <span class="status esperto">Studioso Seriale</span>
+                        </div>
+                    </div>
+                    <p>Ore improbabili spese ad analizzare dati. Excel, statistiche, proiezioni... tutto tempo perso che lo porta sistematicamente nelle ultime posizioni. Tranne l'anno scorso... Coincidenze?</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                        <div class="fantallenatore-header">
+                            <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Gatto_Profilo.png" alt="Gatto Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                            <div class="fantallenatore-info">
+                                <h3>GATTO - L'Osservatore</h3>
+                                <span class="status esperto">Esperto del Calcio</span>
+                            </div>
+                        </div>
+                        <p>Ha snobbato la lega per anni. Nel 2024-25 è tornato come esperto del calcio italico. Macina chilometri per vedere Empoli-Atalanta. Avvistato al ritiro della Cremonese. Dedizione pura.</p>
+                    </div>
+
+                    <div class="fantallenatore-card">
+                        <div class="fantallenatore-header">
+                            <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Nello_Profilo.png" alt="Gatto Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                            <div class="fantallenatore-info">
+                                <h3>NELLO - Il Ritardatario</h3>
+                                <span class="status difficolta">Sempre in Ritardo</span>
+                            </div>
+                        </div>
+                        <p>Si ricorda del fantacalcio un'ora prima dell'asta. Compra grandi nomi che alla quarta giornata si rivelano pippe colossali. Il talento nell'anti-scouting è innato.</p>
+                    </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Ludo_Profilo.png" alt="Ludo Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>LUDO - Lo Scout Sbagliato</h3>
+                            <span class="status esperto">Scout Pro</span>
+                        </div>
+                    </div>
+                    <p>Scout nella vita e nel fantacalcio. Scopre talenti nel momento sbagliato. Luis Alberto? L'anno che non ha visto il campo. L'unica scommessa vincente: THEO.</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Caro_Profilo.png" alt="Caro Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>CARO - L'Alieno Senza Paura</h3>
+                            <span class="status alieno">Debuttante</span>
+                        </div>
+                    </div>
+                    <p>Alieno del fantacalcio che debutta nel 2025-26 senza timore. Incoscienza della giovinezza o genio nascosto? Solo il tempo ce lo dirà.</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Nicco_Profilo.png" alt="Nicco Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>NICCO - L'Omo Birrino</h3>
+                            <span class="status birrino">Alternato</span>
+                        </div>
+                    </div>
+                    <p>Anche "L'omo patatina". Rose competitive... finché non si scoppia una vagonata di birra pre-asta. Ai difensori non sa più dove si trova fisicamente.</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Pippo_Profilo.png" alt="Pippo Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>PIPPO - Il Vendicatore</h3>
+                            <span class="status esperto">Mai Dimentica</span>
+                        </div>
+                    </div>
+                    <p>Pippo non dimentica. Soprattutto non dimentica i 20 euro che Babbo Morze deve ancora. La memoria di un elefante e la determinazione di un segugio.</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Vaso_Profilo.png" alt="Vaso Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>VASO - Connessione Cosmica</h3>
+                            <span class="status alieno">Interspaziale</span>
+                        </div>
+                    </div>
+                    <p>Non si può iniziare l'asta senza il collegamento interspaziale con il "Manager". Quando tecnologia e fantacalcio si incontrano, nascono leggende.</p>
+                </div>
+
+                <div class="fantallenatore-card">
+                    <div class="fantallenatore-header">
+                         <div class="fantallenatore-foto-profilo">
+                                <img src="/Users/simone/Downloads/SitoCSA/img/Ausilio_Profilo.png" alt="Ausilio Profilo" style="width:120px; height:120px; object-fit:cover; border-radius:50%; border:3px solid gold; box-shadow:0 0 10px rgba(255,215,0,0.6);">
+                            </div>
+                        <div class="fantallenatore-info">
+                            <h3>AUSILIO - Il Mistero</h3>
+                            <span class="status esperto">Enigma Vivente</span>
+                        </div>
+                    </div>
+                    <p>Di lui si sa poco, ma la sua presenza è fondamentale per l'equilibrio della lega. Ogni squadra ha bisogno del suo Ausilio personale.</p>
+                </div>
+            </div>
+
+            <div class="info-box" style="border: 2px dashed var(--accent-orange); padding: 2rem; border-radius: 12px; background: #111;">
+    <h3 style="color: var(--accent-orange); text-align: center; margin-bottom: 2rem; font-family: 'Orbitron', monospace; font-size: 1.8rem;">
+        I Veterani del Passato
+    </h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        
+        <!-- CARD 1 -->
+        <div style="background: #1a1a1a; border: 1px solid var(--accent-orange); border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 0 10px rgba(255,140,0,0.3);">
+            <div style="width: 90px; height: 90px; margin: 0 auto 1rem auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold);">
+                <img src="/Users/simone/Downloads/SitoCSA/img/Leo_Profilo.png" alt="Leo/Coppo" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Leo/Coppo</h4>
+            <p style="color: #ddd; font-size: 0.9rem;">Addio nel settembre 2025. "È un arrivederci" - le birre stempiate mancheranno.</p>
+        </div>
+        
+        <!-- CARD 2 -->
+        <div style="background: #1a1a1a; border: 1px solid var(--accent-orange); border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 0 10px rgba(255,140,0,0.3);">
+            <div style="width: 90px; height: 90px; margin: 0 auto 1rem auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold);">
+                <img src="" alt="CENSORED" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Denni</h4>
+            <p style="color: #ddd; font-size: 0.9rem;">Storico che credeva nella CSA quando nessuno aveva fiducia. Espansore della lega.</p>
+        </div>
+        
+        <!-- CARD 3 -->
+        <div style="background: #1a1a1a; border: 1px solid var(--accent-orange); border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 0 10px rgba(255,140,0,0.3);">
+            <div style="width: 90px; height: 90px; margin: 0 auto 1rem auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold);">
+                <img src="/Users/simone/Downloads/SitoCSA/img/Paolino_Profilo.png" alt="Paolino" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Paolino</h4>
+            <p style="color: #ddd; font-size: 0.9rem;">Arrivato, vinto coppa, sparito. Stile gangster del fantacalcio.</p>
+        </div>
+        
+        <!-- CARD 4 -->
+        <div style="background: #1a1a1a; border: 1px solid var(--accent-orange); border-radius: 12px; padding: 1rem; text-align: center; box-shadow: 0 0 10px rgba(255,140,0,0.3);">
+            <div style="width: 90px; height: 90px; margin: 0 auto 1rem auto; border-radius: 50%; overflow: hidden; border: 2px solid var(--gold);">
+                <img src="/Users/simone/Downloads/SitoCSA/img/Morze_Profilo.png" alt="Babbo Morze" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h4 style="color: var(--gold); margin-bottom: 0.5rem;">Babbo Morze</h4>
+            <p style="color: #ddd; font-size: 0.9rem;">Debito: 20 €. Pippo non perdona, non dimentica.</p>
+        </div>
+        
+    </div>
+</div>
+        </section>
+
+        <section id="albo-oro" class="section">
+            <div class="albo-oro">
+                <h3>🏆 ALBO D'ORO LEGGENDARIO</h3>
+                
+                <div class="anno-vittoria">
+                    <strong>2017-18:</strong> 🥇 Pippo, 🥈 Lomba, 🥉 Prata
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2018-19:</strong> 🥇 Lomba, 🥈 Pippo, 🥉 Ludo
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2019-20:</strong> 🥇 Lomba, 🥈 Leo, 🥉 Vaso
+                    <br><small style="color: #ff6b35;">⚠️ L'ANNO DEL CORONAVIRUS</small>
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2020-21:</strong> 🥇 Prata, 🥈 Denni, 🥉 Leo
+                    <br><small>Primo posto sudato fino all'ultima giornata!</small>
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2021-22:</strong> 🥇 Zumba, 🥈 Prata, 🥉 Nello
+                    <br><small>Terza vittoria di Zumba. Nello finalmente sul podio!</small>
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2022-23:</strong> 🥇 Ludo, 🥈 Prata, 🥉 Lomba
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2023-24:</strong> 🥇 Ludo, 🥈 Prata, 🥉 Vaso
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2024-25:</strong> 🥇 Vaso, 🥈 Gatto, 🥉 ???
+                </div>
+                <div class="anno-vittoria">
+                    <strong>2025-26:</strong> 🥇 ???, 🥈 ???,, 🥉 ???
+                    <br><small style="color: var(--accent-orange);">STAGIONE IN CORSO</small>
+                </div>
+                
+            </div>
+
+            <div class="info-box" style="background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,215,0,0.1)); border: 2px solid var(--accent-orange);">
+                <h3 style="color: var(--accent-orange); text-align: center; margin-bottom: 2rem; font-family: 'Orbitron', monospace;">🏆 COPPE DEI TUNZI</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div>
+                        <h4 style="color: var(--gold); margin-bottom: 1rem;">🏆 CHAMPIONS DEI TUNZI</h4>
+                        <p><strong>2022-23:</strong> Zumba (vs Vaso 3-2)</p>
+                        <p><strong>2023-24:</strong> Prata (vs Vaso 3-0)</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #silver; margin-bottom: 1rem;">🥈 EUROPA DEI TUNZI</h4>
+                        <p><strong>2021-22:</strong> Nello (vs Nicco - giocò in 10!)</p>
+                        <p><strong>2022-23:</strong> Paolino (vs Ludo 5-4)</p>
+                        <p><strong>2023-24:</strong> Ludo (vs Pippo 3-0)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="archivio" class="section">
+            <h2>📚 Archivio Storico delle Rose</h2>
+            <div style="text-align: center; margin-bottom: 4rem;">
+                <p style="font-size: 1.3rem; opacity: 0.9; font-weight: 300;">
+                    Rivivere le epiche aste del passato, gli acquisti folli e i fantamilioni sprecati.
+                </p>
+            </div>
+
+            <!-- Stagione 2024-25 Corrente -->
+            <div class="season-archive" style="border: 2px solid var(--accent-orange);">
+                <h3 style="color: var(--accent-orange); text-align: center; margin-bottom: 3rem; font-family: 'Orbitron', monospace;">⚡ STAGIONE 2024-25 - IN CORSO</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <div class="manager-summary">
+                        <h4>👑 Prata - "Prazzers fc"</h4>
+                        <p><strong>Status:</strong> L'eterno studioso<br>
+                        <strong>Aspettative:</strong> Podio garantito<br>
+                        <strong>Speranza:</strong> Prima vittoria?</p>
+                    </div>
+                    <div class="manager-summary">
+                        <h4>⚡ Zumba - "As Pirapolvere"</h4>
+                        <p><strong>Status:</strong> Ex dittatore in crisi<br>
+                        <strong>Mission:</strong> Riconquistare il trono<br>
+                        <strong>Reality:</strong> Pozione esaurita</p>
+                    </div>
+                    <div class="manager-summary">
+                        <h4>🔥 Gatto - "DEBUTTO ESPLOSIVO"</h4>
+                        <p><strong>Status:</strong> Nuova entry<br>
+                        <strong>Background:</strong> Esperto calcistico<br>
+                        <strong>Pressione:</strong> ALTISSIMA</p>
+                    </div>
+                    <div class="manager-summary">
+                        <h4>⚙️ Ausilio - "IL GRANDE MISTERO"</h4>
+                        <p><strong>Status:</strong> Enigma vivente<br>
+                        <strong>Intel:</strong> CLASSIFICATA<br>
+                        <strong>Potenziale:</strong> SCONOSCIUTO</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione Rose Interactive -->
+            <div class="info-box" style="background: var(--dark-bg); border: 2px solid var(--accent-orange);">
+                <h3 style="color: var(--accent-orange); text-align: center; margin-bottom: 3rem; font-family: 'Orbitron', monospace;">📋 ARCHIVIO ROSE COMPLETE</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <button class="roster-button" onclick="toggleRoster('roster2122')" style="background: linear-gradient(135deg, #FF9800, #F57C00);">
+                        📁 Rose 2021-22
+                    </button>
+                    <button class="roster-button" onclick="toggleRoster('roster2223')" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);">
+                        📁 Rose 2022-23  
+                    </button>
+                    <button class="roster-button" onclick="toggleRoster('roster2324')" style="background: linear-gradient(135deg, #4CAF50, #45a049);">
+                        📁 Rose 2023-24
+                    </button>
+                    <button class="roster-button" onclick="toggleRoster('roster2425')" style="background: linear-gradient(135deg, var(--accent-orange), #ff8c42);">
+                        📁 Rose 2024-25
+                    </button>
+
+                    <button class="roster-button" onclick="alert('Rose della stagione corrente in preparazione!')" style="background: linear-gradient(135deg, var(--accent-orange), #ff8c42);">
+                        📁 Rose 2025-26 (Live)
+                    </button>
+                </div>
+                
+                <div id="roster2425" class="roster-details" style="background: rgba(156,39,176,0.1); padding: 2rem; border-radius: 15px; border: 1px solid #9C27B0;">
+                    <h4 style="color: #9C27B0; text-align: center; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">Rose Dettagliate 2022-23</h4>
+                    <p style="text-align: center; font-style: italic; opacity: 0.8;">
+                        Ha vinto il Fanta Vaso, quindi possiamo anche evitare di guardare le rose.
+                    </p>
+                </div>
+
+                <div id="roster2324" class="roster-details" style="background: rgba(76,175,80,0.1); padding: 2rem; border-radius: 15px; border: 1px solid #4CAF50;">
+                    <h4 style="color: #4CAF50; text-align: center; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">Rose Dettagliate 2023-24</h4>
+                    <p style="text-align: center; font-style: italic; opacity: 0.8;">
+                        Database completo in elaborazione... Presto tutti i dettagli di acquisti e flop!
+                    </p>
+                </div>
+                
+                <div id="roster2223" class="roster-details" style="background: rgba(156,39,176,0.1); padding: 2rem; border-radius: 15px; border: 1px solid #9C27B0;">
+                    <h4 style="color: #9C27B0; text-align: center; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">Rose Dettagliate 2022-23</h4>
+                    <p style="text-align: center; font-style: italic; opacity: 0.8;">
+                        La stagione del primo trionfo di Ludo e dell'acquisto folle di Vlahovic (84 Fm )...
+                    </p>
+                </div>
+                
+                <div id="roster2122" class="roster-details" style="background: rgba(255,152,0,0.1); padding: 2rem; border-radius: 15px; border: 1px solid #FF9800;">
+                    <h4 style="color: #FF9800; text-align: center; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">Rose Dettagliate 2021-22</h4>
+                    <p style="text-align: center; font-style: italic; opacity: 0.8;">
+                        L'ultima vittoria di Zumba e il primo podio storico di Nello...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Statistiche Epic -->
+            <div class="info-box" style="background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,107,53,0.1)); border: 2px solid var(--gold);">
+                <h3 style="color: var(--gold); text-align: center; margin-bottom: 3rem; font-family: 'Orbitron', monospace;">📊 HALL OF FAME & SHAME</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div style="background: rgba(255,215,0,0.1); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--gold);">
+                        <h4 style="color: var(--gold); margin-bottom: 1rem;">🏆 LEGGENDE</h4>
+                        <p><strong>Zumba:</strong> 3 vittorie (l'impero perduto)</p>
+                        <p><strong>Ludo:</strong> 2 vittorie consecutive (meteora)</p>
+                        <p><strong>Prata:</strong> Sempre sul podio, mai primo</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.3); border-radius: 15px;">
+                    <p style="font-style: italic; font-size: 1.2rem; color: var(--gold); font-family: 'Orbitron', monospace;">
+                        "Nel fantacalcio CSA, ogni acquisto è una speranza, ogni speranza una delusione, ma ogni delusione una leggenda immortale."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="tunzi" class="section">
+            <h2>🚗 LA LEGGENDA DEI TUNZI</h2>
+            <div class="info-box" style="background: rgba(255,0,0,0.1); border: 2px solid #ff4444;">
+                <h3 style="color: #ff4444; margin-bottom: 2rem; text-align: center; font-family: 'Orbitron', monospace;">⚠️ STORIA VERA - CLASSIFICATA</h3>
+                <div style="font-size: 1.1rem; line-height: 1.8;">
+                    <p style="margin-bottom: 1.5rem;">
+                        Durante il ritorno dalla mitica casa di Ludo a Treggiaia, tre fantallenatori (Zumba, Ludo e Vaso) furono vittime di un tentativo di rapina da parte dei <strong style="color: #ff4444;">TUNZI</strong>.
+                    </p>
+                    <p style="margin-bottom: 1.5rem;">
+                        I Tunzi sono individui (prevalentemente uomini di mezza età) che si nascondono negli alberi o in Mercedes, pronti a minacciare con armi quando ti fermi al semaforo.
+                    </p>
+                    <p style="color: #4CAF50; font-weight: bold; margin-bottom: 1.5rem;">
+                        <strong>LIETO FINE:</strong> I tre eroi scamparono decellerando in prossimità del semaforo, costringendo i Tunzi alla ritirata strategica.
+                    </p>
+                    <div style="text-align: center; padding: 2rem; background: rgba(255,107,53,0.1); border-radius: 15px; border: 1px solid var(--accent-orange);">
+                        <p style="font-size: 1.3rem; color: var(--accent-orange); font-weight: bold; font-family: 'Orbitron', monospace;">
+                            Ed è così che le coppe europee presero il nome di "COPPE DEI TUNZI"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="regolamento" class="section">
+    <h2>📋 Il Sacro Regolamento</h2>
+    <div class="info-box" style="background: var(--dark-bg); border: 2px solid var(--accent-orange);">
+        <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; color: var(--accent-orange); font-family: 'Orbitron', monospace;">
+            <strong>"Ogni partecipante è tenuto a leggere e conoscere il Regolamento"</strong>
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <!-- Quote e Premi -->
+            <div style="background: var(--gradient-card); padding: 2rem; border-radius: 15px; border: 1px solid var(--accent-orange);">
+                <h4 style="color: var(--accent-orange); margin-bottom: 1rem; font-family: 'Orbitron', monospace;">💰 Quote e Premi</h4>
+                <p>• <strong>Quota:</strong> 40 €  (2 rate)<br>
+                • <strong>1°:</strong> 150 €  | <strong>2°:</strong> 90 €  | <strong>3°:</strong> 40 € <br>
+                • <strong>Champions:</strong> 65 €  | <strong>Europa:</strong> 45 € </p>
+            </div>
+
+            <!-- Regole Base -->
+            <div style="background: var(--gradient-card); padding: 2rem; border-radius: 15px; border: 1px solid #4CAF50;">
+                <h4 style="color: #4CAF50; margin-bottom: 1rem; font-family: 'Orbitron', monospace;">⚽ Regole Base</h4>
+                <p>• <strong>Fantallenatori:</strong> 10<br>
+                • <strong>Budget:</strong> 500 fantamilioni<br>
+                • <strong>Soglia gol:</strong> 66 punti<br>
+                • <strong>Moduli:</strong> 352, 343, 451, 442, 433</p>
+            </div>
+
+            <!-- Scadenze -->
+            <div style="background: var(--gradient-card); padding: 2rem; border-radius: 15px; border: 1px solid var(--gold);">
+                <h4 style="color: var(--gold); margin-bottom: 1rem; font-family: 'Orbitron', monospace;">🕐 Scadenze</h4>
+                <p>• <strong>Formazioni:</strong> 15min prima anticipo<br>
+                • <strong>Bonus:</strong> 1 standard + 1 aleatorio<br>
+                • <strong>Panchina:</strong> Max 10 | Sostituzioni: 5</p>
+            </div>
+
+            <!-- Punizioni -->
+            <div style="background: var(--gradient-card); padding: 2rem; border-radius: 15px; border: 1px solid #ff4444;">
+                <h4 style="color: #ff4444; margin-bottom: 1rem; font-family: 'Orbitron', monospace;">📜 Punizioni</h4>
+                <p>• <strong>Rosa incompleta:</strong> Giocatore d'ufficio + 1pt<br>
+                • <strong>Sforamento budget:</strong> 1pt per milione<br>
+                • <strong>Violazioni:</strong> Decisione collettiva</p>
+            </div>
+        
+
+        <!-- COMPETIZIONI -->
+         <div style="margin-top: 3rem; padding: 2rem; background: var(--gradient-card); border: 2px solid #1e90ff; border-radius: 15px;">
+            <h3 style="color: #1e90ff; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">🏆 Competizioni</h3>
+            <p>Le competizioni ufficiali della lega sono:<br>
+            • <strong>PDP</strong><br>
+            • <strong>Champions dei Tunzi</strong><br>
+            • <strong>Europa dei Tunzi</strong></p>
+        </div>
+
+        <!-- MERCATO E ASTE -->
+        <div style="margin-top: 2rem; padding: 2rem; background: var(--gradient-card); border: 2px solid #ffa500; border-radius: 15px;">
+            <h3 style="color: #ffa500; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">💸 Mercato e Aste</h3>
+            <p>• <strong>Asta iniziale:</strong> svolta a settembre, con 500 fantamilioni a disposizione.<br>
+            • Penalità: se un manager spende più di 500 fantamilioni o non completa la rosa, verrà inflitto <strong>1pt per milione sforato</strong> (arrotondato per eccesso).<br><br>
+        </div> 
+
+        <div style="margin-top: 2rem; padding: 2rem; background: var(--gradient-card); border: 2px solid #ffa500; border-radius: 15px;">
+            <h3 style="color: #ffa500; font-family: 'Orbitron', monospace; margin-bottom: 1rem;"> Asta di riparazione:</h3>
+            <p>I giocatori devono essere svincolati prima dell’inizio. Un allenatore può riacquistare un giocatore solo al prezzo uguale o superiore di svincolo. Per i giocatori senza squadra si procede ad asta.<br><br>
+            </p> 
+        </div>
+
+         <div style="margin-top: 2rem; padding: 2rem; background: var(--gradient-card); border: 2px solid #ffa500; border-radius: 15px;">
+            <h3 style="color: #ffa500; font-family: 'Orbitron', monospace; margin-bottom: 1rem;"> Scambi</h3>
+            <p> Concessi solo dopo le aste, in due sessioni:<br>
+            – Dopo l’asta iniziale fino a 3 ore prima della giornata successiva.<br>
+            – Dopo l’asta di riparazione fino a 3 ore prima della giornata successiva.</p> </p> 
+        </div>
+
+        <!-- SVINCOLI -->
+        <div style="margin-top: 2rem; padding: 2rem; background: var(--gradient-card); border: 2px solid #ff69b4; border-radius: 15px;">
+            <h3 style="color: #ff69b4; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">🔄 Svincoli</h3>
+            <p>• Nei due mercati è possibile svincolare qualsiasi giocatore.<br>
+            • <strong>Svincolo normale:</strong> restituisce metà dei crediti spesi.<br>
+            • <strong>Svincolo speciale:</strong> se il giocatore va all’estero, in serie minori o rescinde il contratto → si ricevono tutti i fantamilioni spesi.<br><br>
+        </div>
+
+        
+        </div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="https://it.pornhub.com/" class="cta-button">
+                    📄 Scarica Regolamento Completo
+                </a>
+            </div>
+    </div>
+</section>
+
+    </main>
+
+    <footer class="footer">
+        <p style="font-size: 1.1rem; margin-bottom: 1rem;">&copy; 2025 Lega CSA - Dal 2013 regaliamo sogni e distruggiamo speranze</p>
+        <p style="font-size: 1rem; opacity: 0.8; font-style: italic;">
+            "Dove il calcio vero incontra la fantasia pura"
+        </p>
+    </footer>
+
+    <div class="easter-egg" onclick="openModal()">⚽</div>
+
+    <div id="easterModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--accent-orange); text-align: center; font-family: 'Orbitron', monospace; margin-bottom: 1rem;">
+                🎉 EASTER EGG SCOPERTO! 🎉
+            </h2>
+            <p style="text-align: center; margin: 2rem 0; font-size: 1.1rem;">
+                Hai trovato il segreto nascosto della Lega CSA!
+            </p>
+            <div style="text-align: center; font-size: 1.4rem; margin: 2rem 0; padding: 1.5rem; background: rgba(255,107,53,0.1); border-radius: 15px; border: 1px solid var(--accent-orange);">
+                <p style="color: var(--gold); font-family: 'Orbitron', monospace; font-weight: bold;">
+                    "Il vero tesoro erano le pippe che abbiamo comprato lungo il percorso"
+                </p>
+            </div>
+            <p style="text-align: center; font-style: italic; color: var(--accent-orange); opacity: 0.8;">
+                - Antica saggezza fantacalcistica CSA
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Animazioni scroll header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0,0,0,0.95)';
+                header.style.backdropFilter = 'blur(25px)';
+            } else {
+                header.style.background = 'rgba(0,0,0,0.9)';
+                header.style.backdropFilter = 'blur(20px)';
+            }
+        });
+
+        // Smooth scroll navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Modal functions
+        function openModal() {
+            const modal = document.getElementById('easterModal');
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('easterModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('easterModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Toggle roster sections
+        function toggleRoster(rosterId) {
+            const rosterElement = document.getElementById(rosterId);
+            if (rosterElement) {
+                if (rosterElement.style.display === 'none' || rosterElement.style.display === '') {
+                    // Hide all other open rosters
+                    document.querySelectorAll('.roster-details').forEach(roster => {
+                        roster.style.display = 'none';
+                    });
+                    // Show selected one
+                    rosterElement.style.display = 'block';
+                    rosterElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    rosterElement.style.display = 'none';
+                }
+            }
+        }
+
+        // Enhanced particle system
+        function createParticle() {
+            const particle = document.createElement('div');
+            const size = Math.random() * 6 + 2;
+            const colors = ['#ff6b35', '#ffd700', '#4CAF50', '#ffffff'];
+            
+            particle.style.position = 'fixed';
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.opacity = '0.7';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.top = '100vh';
+            particle.style.zIndex = '1';
+            particle.style.boxShadow = '0 0 10px rgba(255,107,53,0.5)';
+            
+            document.body.appendChild(particle);
+            
+            const animation = particle.animate([
+                { 
+                    transform: 'translateY(0) rotate(0deg) scale(1)', 
+                    opacity: 0.7 
+                },
+                { 
+                    transform: `translateY(-120vh) rotate(360deg) scale(${Math.random() + 0.5})`, 
+                    opacity: 0 
+                }
+            ], {
+                duration: 4000 + Math.random() * 3000,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            });
+            
+            animation.onfinish = () => particle.remove();
+        }
+
+        // Create particles with varying frequency
+        setInterval(createParticle, 1500);
+
+        // Enhanced hover effects for cards
+        document.querySelectorAll('.fantallenatore-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) rotateX(8deg) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) rotateX(0deg) scale(1)';
+            });
+        });
+
+        // Random stats popup system
+        const epicStats = [
+            "⚡ Fantamilioni totali bruciati: 50,000+",
+            "🏆 Vittorie di Zumba nell'era d'oro: 3",
+            "📊 Costanza di Prata: Sempre sul podio, mai primo",
+            "🎯 Affare del secolo: Milinkovic-Savic  Fm 1 (Prata)",
+            "🍺 Birre consumate da Nicco: INNUMEREVOLI",
+            "📡 Connessioni interspaziali con il Manager di Vaso: ∞",
+            "Formazione dimenticata: anche stavolta",
+            "Gatto sta comprando un biglietto di una partita",
+            "Ti sei dimenticato di pagare la quota?",
+            "💰 Debito Babbo Morze:  Fm 20 (Mai dimenticati)"
+        ];
+
+        function showEpicStat() {
+            const randomStat = epicStats[Math.floor(Math.random() * epicStats.length)];
+            
+            const statPopup = document.createElement('div');
+            statPopup.style.position = 'fixed';
+            statPopup.style.top = '30px';
+            statPopup.style.right = '30px';
+            statPopup.style.background = 'linear-gradient(135deg, rgba(255,107,53,0.95), rgba(255,215,0,0.95))';
+            statPopup.style.color = 'white';
+            statPopup.style.padding = '1.5rem';
+            statPopup.style.borderRadius = '15px';
+            statPopup.style.zIndex = '1500';
+            statPopup.style.maxWidth = '350px';
+            statPopup.style.minWidth = '300px';
+            statPopup.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+            statPopup.style.border = '2px solid var(--gold)';
+            statPopup.style.backdropFilter = 'blur(10px)';
+            statPopup.style.transform = 'translateX(400px)';
+            statPopup.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            statPopup.style.fontFamily = "'Roboto', sans-serif";
+            statPopup.innerHTML = `
+                <div style="font-family: 'Orbitron', monospace; font-weight: bold; margin-bottom: 0.5rem; color: var(--gold);">
+                    📊 STAT EPICA CSA
+                </div>
+                <div style="font-size: 1rem; line-height: 1.4;">
+                    ${randomStat}
+                </div>
+            `;
+            
+            document.body.appendChild(statPopup);
+            
+            // Animate entry
+            setTimeout(() => {
+                statPopup.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Animate exit
+            setTimeout(() => {
+                statPopup.style.transform = 'translateX(400px)';
+                setTimeout(() => statPopup.remove(), 600);
+            }, 5000);
+        }
+
+        // Show epic stats every 25 seconds
+        setInterval(showEpicStat, 25000);
+
+        // Enhanced background particles system
+        function createBackgroundParticles() {
+            const particlesContainer = document.querySelector('.particles-bg');
+            if (!particlesContainer) return;
+
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                const size = Math.random() * 3 + 1;
+                
+                particle.style.position = 'absolute';
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.background = `rgba(255, 107, 53, ${Math.random() * 0.5 + 0.1})`;
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animation = `float ${10 + Math.random() * 20}s linear infinite`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Add floating animation for background particles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes float {
+                0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+                33% { transform: translateY(-20px) translateX(10px) rotate(120deg); }
+                66% { transform: translateY(10px) translateX(-10px) rotate(240deg); }
+                100% { transform: translateY(0px) translateX(0px) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize background particles
+        createBackgroundParticles();
+
+        // Advanced scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections for scroll animations
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Add fadeInUp animation
+        const fadeInUpStyle = document.createElement('style');
+        fadeInUpStyle.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .section {
+                opacity: 0;
+            }
+        `;
+        document.head.appendChild(fadeInUpStyle);
+
+        // Interactive logo effect
+        const logo = document.querySelector('.logo');
+        if (logo) {
+            logo.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.1) rotate(5deg)';
+                this.style.textShadow = '0 0 50px rgba(255,107,53,0.8)';
+            });
+            
+            logo.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+                this.style.textShadow = '0 0 30px rgba(255,107,53,0.5)';
+            });
+        }
+
+        // Dynamic background color change based on scroll
+        window.addEventListener('scroll', function() {
+            const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const hue1 = 120 + (scrollPercent * 60); // From green to yellow-green
+            const hue2 = 140 + (scrollPercent * 40); // Complementary shift
+            
+            document.body.style.background = `linear-gradient(135deg, hsl(${hue1}, 45%, 25%) 0%, hsl(${hue2}, 50%, 35%) 50%, hsl(120, 40%, 30%) 100%)`;
+        });
+
+        // Add loading screen effect
+        window.addEventListener('load', function() {
+            const loadingScreen = document.createElement('div');
+            loadingScreen.style.position = 'fixed';
+            loadingScreen.style.top = '0';
+            loadingScreen.style.left = '0';
+            loadingScreen.style.width = '100%';
+            loadingScreen.style.height = '100%';
+            loadingScreen.style.background = 'var(--gradient-main)';
+            loadingScreen.style.display = 'flex';
+            loadingScreen.style.alignItems = 'center';
+            loadingScreen.style.justifyContent = 'center';
+            loadingScreen.style.zIndex = '9999';
+            loadingScreen.style.transition = 'opacity 1s ease, visibility 1s ease';
+            loadingScreen.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="font-family: 'Orbitron', monospace; font-size: 3rem; color: var(--gold); margin-bottom: 1rem; animation: pulse 2s infinite;">
+                        LEGA CSA
+                    </div>
+                    <div style="font-size: 1.2rem; color: white; opacity: 0.8;">
+                        Caricamento epicità...
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(loadingScreen);
+            
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                loadingScreen.style.visibility = 'hidden';
+                setTimeout(() => loadingScreen.remove(), 1000);
+            }, 2000);
+        });
+
+        // Add pulse animation for loading
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.05); opacity: 0.8; }
+                100% { transform: scale(1); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(pulseStyle);
+
+        console.log('🏆 Lega CSA Website - Fully Loaded & Enhanced! ⚡');
+    </script>
+</body>
+</html>
